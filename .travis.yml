@@ -38,8 +38,8 @@ before_script:
 script:
  - echo "$DOCKER_PASSWORD" | docker login -u="$DOCKER_USERNAME" "$DOCKER_REGISTRY" --password-stdin &&
    if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-     DOCKER_PUSH=1 bash ./build-image.sh;
+     DOCKER_PUSH=1 bash ./build-image.sh || travis_terminate 1;
      curl -X POST https://hooks.microbadger.com/images/$DOCKER_REPO/$MICROBADGER_TOKEN || true;
    else 
-     bash ./build-image.sh;
+     bash ./build-image.sh || travis_terminate 1;
    fi

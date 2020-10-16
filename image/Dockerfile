@@ -6,6 +6,7 @@
 # https://github.com/vegardit/docker-jenkins-ext
 #
 
+# https://hub.docker.com/r/jenkins/jenkins/tags?page=1&name=lts-slim
 # https://github.com/jenkinsci/docker/blob/master/Dockerfile-slim
 ARG BASE_IMAGE=jenkins:jenkins/lts-slim
 
@@ -82,10 +83,26 @@ RUN \
   echo "IMAGE_BUILD: $BUILD_DATE" >> /opt/build_info && \
   cat /opt/build_info && \
   ############################################################
-  if [[ ! -e /usr/lib/jenkins-plugin-manager.jar ]]; then \
-     echo "Installing [Jenkins plugin manager]..." && \
-     curl -L https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/plugin-management-parent-pom-2.0.0/jenkins-plugin-manager-2.0.0.jar -o /usr/lib/jenkins-plugin-manager.jar; \
+  plugin_manager_version=2.1.0 && \
+  plugin_manager_jar=/usr/lib/jenkins-plugin-manager.jar && \
+  # check if a plugin manager version is installed already
+  if [[ -e /usr/lib/jenkins-plugin-manager.jar ]]; then \
+    installed_version=$(java -jar $plugin_manager_jar --version) && \
+    # check if required version is installed already
+    if [[ $plugin_manager_version != $installed_version ]]; then \
+      # check if required version is newer than installed version
+      # https://stackoverflow.com/a/25731924
+      if [[ $plugin_manager_version == $(echo -e "$plugin_manager_version\n$installed_version" | sort -t '.' -k 1,1 -k 2,2 -k 3,3 -g | tail -1) ]]; then \
+        echo "Uninstalling [Jenkins plugin manager ${installed_version}]..." && \
+        rm -f $plugin_manager_jar; \
+      fi \
+    fi \
   fi && \
+  if [[ ! -e $plugin_manager_jar ]]; then \
+    echo "Installing [Jenkins plugin manager ${plugin_manager_version}]..." && \
+    curl -L https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/${plugin_manager_version}/jenkins-plugin-manager-${plugin_manager_version}.jar -o $plugin_manager_jar; \
+  fi && \
+  echo "Installed Jenkins plugin manager version: $(java -jar $plugin_manager_jar --version)" && \
   ############################################################
   chmod 775 /usr/local/bin/jenkins-ext.sh
 
