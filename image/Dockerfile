@@ -60,6 +60,7 @@ ARG GIT_BRANCH
 ARG GIT_COMMIT_HASH
 ARG GIT_COMMIT_DATE
 ARG GIT_REPO_URL
+ARG JENKINS_PLUGIN_MANAGER_MIN_VERSION='2.1.1'
 
 LABEL \
   org.label-schema.schema-version="1.0" \
@@ -83,24 +84,23 @@ RUN \
   echo "IMAGE_BUILD: $BUILD_DATE" >> /opt/build_info && \
   cat /opt/build_info && \
   ############################################################
-  plugin_manager_version=2.1.0 && \
   plugin_manager_jar=/usr/lib/jenkins-plugin-manager.jar && \
   # check if a plugin manager version is installed already
   if [[ -e /usr/lib/jenkins-plugin-manager.jar ]]; then \
     installed_version=$(java -jar $plugin_manager_jar --version) && \
     # check if required version is installed already
-    if [[ $plugin_manager_version != $installed_version ]]; then \
-      # check if required version is newer than installed version
+    if [[ $JENKINS_PLUGIN_MANAGER_MIN_VERSION != $installed_version ]]; then \
+      # check if installed version in the base image is older than required version
       # https://stackoverflow.com/a/25731924
-      if [[ $plugin_manager_version == $(echo -e "$plugin_manager_version\n$installed_version" | sort -t '.' -k 1,1 -k 2,2 -k 3,3 -g | tail -1) ]]; then \
+      if [[ $JENKINS_PLUGIN_MANAGER_MIN_VERSION == $(echo -e "$JENKINS_PLUGIN_MANAGER_MIN_VERSION\n$installed_version" | sort -t '.' -k 1,1 -k 2,2 -k 3,3 -g | tail -1) ]]; then \
         echo "Uninstalling [Jenkins plugin manager ${installed_version}]..." && \
         rm -f $plugin_manager_jar; \
       fi \
     fi \
   fi && \
   if [[ ! -e $plugin_manager_jar ]]; then \
-    echo "Installing [Jenkins plugin manager ${plugin_manager_version}]..." && \
-    curl -L https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/${plugin_manager_version}/jenkins-plugin-manager-${plugin_manager_version}.jar -o $plugin_manager_jar; \
+    echo "Installing [Jenkins plugin manager ${JENKINS_PLUGIN_MANAGER_MIN_VERSION}]..." && \
+    curl -L https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/$JENKINS_PLUGIN_MANAGER_MIN_VERSION/jenkins-plugin-manager-${JENKINS_PLUGIN_MANAGER_MIN_VERSION}.jar -o $plugin_manager_jar; \
   fi && \
   echo "Installed Jenkins plugin manager version: $(java -jar $plugin_manager_jar --version)" && \
   ############################################################
