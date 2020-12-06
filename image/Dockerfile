@@ -1,7 +1,7 @@
-# Copyright 2019-2020 by Vegard IT GmbH, Germany, https://vegardit.com
+# Copyright 2020 by Vegard IT GmbH, Germany, https://vegardit.com
 # SPDX-License-Identifier: Apache-2.0
 #
-# @author Sebastian Thomschke, Vegard IT GmbH
+# Author: Sebastian Thomschke, Vegard IT GmbH
 #
 # https://github.com/vegardit/docker-jenkins-ext
 #
@@ -27,16 +27,26 @@ ARG LC_ALL=C
 ARG BASE_LAYER_CACHE_KEY
 
 RUN \
-  set -x && \
-  ############################################################
+  set -eu && \
+  echo "#################################################" && \
   echo "Installing OS updates..." && \
-  apt-get -y update && \
-  apt-get -y upgrade && \
-  ############################################################
+  echo "#################################################" && \
+  apt-get update -y && \
+  # https://github.com/phusion/baseimage-docker/issues/319
+  apt-get install --no-install-recommends -y apt-utils 2> >( grep -v 'debconf: delaying package configuration, since apt-utils is not installed' >&2 ) && \
+  apt-get upgrade -y && \
+  #
+  echo "#################################################" && \
+  echo "Installing tools..." && \
+  echo "#################################################" && \
+  apt-get install --no-install-recommends -y curl git less procps && \
+  #
   if [ "${DEBUG_BUILD}" = "1" ]; then \
+     echo "#################################################" && \
      echo "Installing debugging tools..." && \
+     echo "#################################################" && \
      apt-get install --no-install-recommends -y libcomerr2 mc && \
-     apt-get install --no-install-recommends -y htop less procps vim && \
+     apt-get install --no-install-recommends -y htop vim && \
      echo -e 'set ignorecase\n\
 set showmatch\n\
 set novisualbell\n\
@@ -44,12 +54,17 @@ set noerrorbells\n\
 syntax enable\n\
 set mouse-=a' > ~/.vimrc; \
   fi && \
-  ############################################################
+  #
+  echo "#################################################" && \
   echo "apt-get clean up..." && \
+  echo "#################################################" && \
+  apt-get remove apt-utils -y && \
   apt-get clean autoclean && \
   apt-get autoremove --purge -y && \
-  ############################################################
+  #
+  echo "#################################################" && \
   echo "Removing logs, caches and temp files..." && \
+  echo "#################################################" && \
   rm -rf /var/cache/{apt,debconf} \
      /var/lib/apt/lists/* \
      /var/log/{apt,alternatives.log,bootstrap.log,dpkg.log} \

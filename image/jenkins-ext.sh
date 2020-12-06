@@ -1,16 +1,22 @@
 #!/usr/bin/env bash
 #
-# Copyright 2019-2020 by Vegard IT GmbH, Germany, https://vegardit.com
+# Copyright 2020 by Vegard IT GmbH, Germany, https://vegardit.com
 # SPDX-License-Identifier: Apache-2.0
 #
-# @author Sebastian Thomschke, Vegard IT GmbH
+# Author: Sebastian Thomschke, Vegard IT GmbH
 #
 # https://github.com/vegardit/docker-jenkins-ext
 #
 
-set -e -u
+set -eu
+
+#################################################
+# execute script with bash if loaded with other shell interpreter
+#################################################
 if [ -z "${BASH_VERSINFO:-}" ]; then /usr/bin/env bash "$0" "$@"; exit; fi
+
 set -o pipefail
+
 trap 'echo >&2 "$(date +%H:%M:%S) Error - exited with status $? at line $LINENO:"; pr -tn $0 | tail -n+$((LINENO - 3)) | head -n7' ERR
 
 if [[ ${DEBUG_ENTRYPOINT:-} == "1" ]]; then
@@ -54,9 +60,9 @@ export JAVA_OPTS="
 "
 
 
-#############################
+#################################################
 # installing required plugins
-#############################
+#################################################
 if [[ -n ${REQUIRED_PLUGINS:-} || -n ${REQUIRED_PLUGINS_FILE:-} || ! -e $REF/plugins/configuration-as-code.jpi ]]; then
    echo "configuration-as-code:latest" > /tmp/required_plugins.txt
    if [[ -n ${REQUIRED_PLUGINS:-} ]]; then
@@ -94,9 +100,9 @@ if [[ -n ${REQUIRED_PLUGINS:-} || -n ${REQUIRED_PLUGINS_FILE:-} || ! -e $REF/plu
 fi
 
 
-#############################
+#################################################
 # loading original entrypoint file
-#############################
+#################################################
 if [[ ${DEBUG_ENTRYPOINT:-} == "1" ]]; then
    exec bash -x /usr/local/bin/jenkins.sh "$@"
 else

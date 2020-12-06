@@ -1,6 +1,6 @@
 # docker-jenkins-ext <a href="https://github.com/vegardit/docker-jenkins-ext/" title="GitHub Repo"><img height="30" src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/github.svg?sanitize=true"></a>
 
-[![Build Status](https://travis-ci.com/vegardit/docker-jenkins-ext.svg?branch=master "Travis CI")](https://travis-ci.com/vegardit/docker-jenkins-ext)
+[![Build Status](https://github.com/vegardit/docker-jenkins-ext/workflows/Build/badge.svg "GitHub Actions")](https://github.com/vegardit/docker-jenkins-ext/actions?query=workflow%3ABuild)
 [![License](https://img.shields.io/github/license/vegardit/docker-jenkins-ext.svg?label=license)](#license)
 [![Docker Pulls](https://img.shields.io/docker/pulls/vegardit/jenkins-ext.svg)](https://hub.docker.com/r/vegardit/jenkins-ext)
 [![Docker Stars](https://img.shields.io/docker/stars/vegardit/jenkins-ext.svg)](https://hub.docker.com/r/vegardit/jenkins-ext)
