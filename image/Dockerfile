@@ -75,7 +75,8 @@ ARG GIT_BRANCH
 ARG GIT_COMMIT_HASH
 ARG GIT_COMMIT_DATE
 ARG GIT_REPO_URL
-ARG JENKINS_PLUGIN_MANAGER_MIN_VERSION='2.1.1'
+# https://github.com/jenkinsci/plugin-installation-manager-tool/releases
+ARG JENKINS_PLUGIN_MANAGER_MIN_VERSION='2.5.0'
 
 LABEL \
   org.label-schema.schema-version="1.0" \
