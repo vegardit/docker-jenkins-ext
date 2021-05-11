@@ -79,14 +79,26 @@ if [[ $OSTYPE != cygwin ]] && [[ $OSTYPE != msys ]]; then
    trivy_cache_dir="${TRIVY_CACHE_DIR:-$HOME/.trivy/cache}"
    trivy_cache_dir="${trivy_cache_dir/#\~/$HOME}"
    mkdir -p "$trivy_cache_dir"
+
    docker run --rm \
       -v /var/run/docker.sock:/var/run/docker.sock:ro \
       -v "$trivy_cache_dir:/root/.cache/" \
-      aquasec/trivy --no-progress --exit-code 0 --severity HIGH,CRITICAL $image_name
+      aquasec/trivy --no-progress \
+        --severity HIGH,CRITICAL \
+        --exit-code 0 \
+        $image_name
+
    docker run --rm \
       -v /var/run/docker.sock:/var/run/docker.sock:ro \
+      -v "$project_root/.trivyignore":/.trivyignore \
       -v "$trivy_cache_dir:/root/.cache/" \
-      aquasec/trivy --no-progress --ignore-unfixed --exit-code 1 --severity HIGH,CRITICAL $image_name
+      aquasec/trivy --no-progress \
+        --severity HIGH,CRITICAL \
+        --ignore-unfixed \
+        --ignorefile /.trivyignore \
+        --exit-code 1 \
+        $image_name
+
    sudo chown -R $USER:$(id -gn) "$trivy_cache_dir" || true
 fi
 
