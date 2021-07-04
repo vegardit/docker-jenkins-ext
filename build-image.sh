@@ -73,6 +73,14 @@ docker build "$project_root/image" \
 
 
 #################################################
+# determine effective Jenkins version and apply tags
+#################################################
+jenkins_version=$(docker run --rm $image_name --version | tail -1)
+docker image tag $image_name $image_repo:${jenkins_version%%.*}.x-$base_image_tag #2.x-lts-slim
+echo "jenkins_version=$jenkins_version"
+
+
+#################################################
 # perform security audit using https://github.com/aquasecurity/trivy
 #################################################
 if [[ $OSTYPE != cygwin ]] && [[ $OSTYPE != msys ]]; then
@@ -101,13 +109,6 @@ if [[ $OSTYPE != cygwin ]] && [[ $OSTYPE != msys ]]; then
 
    sudo chown -R $USER:$(id -gn) "$trivy_cache_dir" || true
 fi
-
-
-#################################################
-# determine effective Jenkins version and apply tags
-#################################################
-jenkins_version=$(docker run --rm $image_name --version | tail -1)
-docker image tag $image_name $image_repo:${jenkins_version%%.*}.x-$base_image_tag #2.x-lts-slim
 
 
 #################################################
