@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright 2020 by Vegard IT GmbH, Germany, https://vegardit.com
+# Copyright 2020-2021 by Vegard IT GmbH, Germany, https://vegardit.com
 # SPDX-License-Identifier: Apache-2.0
 #
 # Author: Sebastian Thomschke, Vegard IT GmbH
@@ -17,17 +17,40 @@ if [ -z "${BASH_VERSINFO:-}" ]; then /usr/bin/env bash "$0" "$@"; exit; fi
 
 set -o pipefail
 
-trap 'status=$?; echo >&2 "$(date +%H:%M:%S) Error - exited with status $status at line $LINENO:"; pr -tn $0 | tail -n+$((LINENO - 3)) | head -n7' ERR
+
+#################################################
+# install debug traps
+#################################################
+trap 'echo >&2 "$(date +%H:%M:%S) Error - exited with status $? at line $LINENO:"; pr -tn $0 | tail -n+$((LINENO - 3)) | head -n7' ERR
 
 if [[ ${DEBUG_ENTRYPOINT:-} == "1" ]]; then
-   set -x
+  if [[ $- =~ x ]]; then
+    # "set -x" was specified already, we only improve the PS4 in this case
+    PS4='+\033[90m[$?] $BASH_SOURCE:$LINENO ${FUNCNAME[0]}()\033[0m '
+  else
+    # "set -x" was not specified, we use a DEBUG trap for better debug output
+    set -T
+
+    __print_debug_statement() {
+      printf "\e[90m#[$?] $BASH_SOURCE:$1 ${FUNCNAME[1]}() %*s\e[35m$BASH_COMMAND\e[m\n" "$(( 2 * ($BASH_SUBSHELL + ${#FUNCNAME[*]} - 2) ))" >&2
+    }
+    trap '__print_debug_statement $LINENO' DEBUG
+  fi
 fi
 
+
+#################################################
+# check for adhoc command
+#################################################
 # if `docker run` first argument start with `--` the user is passing jenkins launcher arguments
 if [[ $# -gt 0 ]] && [[ "$1" != "--"* ]]; then
    exec "$@"
 fi
 
+
+#################################################
+# print header
+#################################################
 cat <<'EOF'
  _    __                          __   __________
 | |  / /__  ____ _____ __________/ /  /  _/_  __/
@@ -45,10 +68,19 @@ echo JENKINS_SLAVE_AGENT_PORT: ${JENKINS_SLAVE_AGENT_PORT}
 echo JENKINS_REF: $REF
 echo
 
+
+#################################################
+# load custom init script if specified
+#################################################
 if [[ -f $INIT_SH_FILE ]]; then
-   source "$INIT_SH_FILE"
+  echo "Loading [$INIT_SH_FILE]..."
+  source "$INIT_SH_FILE"
 fi
 
+
+#################################################
+# tune some JVM parameters
+#################################################
 # jenkins.install.runSetupWizard = skip initial setup
 export JAVA_OPTS="
  -Djenkins.install.runSetupWizard=false
