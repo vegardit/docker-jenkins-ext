@@ -19,13 +19,11 @@ USER root
 
 SHELL ["/bin/bash", "-c"]
 
-# if set to 1 debug tools are added to the image (htop,less,mc,vim)
-ARG DEBUG_BUILD=0
-
 ARG DEBIAN_FRONTEND=noninteractive
 ARG LC_ALL=C
 
 ARG BASE_LAYER_CACHE_KEY
+ARG INSTALL_SUPPORT_TOOLS=0
 
 RUN --mount=type=bind,source=.shared,target=/mnt/shared \
   set -eu && \
