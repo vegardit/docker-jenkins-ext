@@ -1,4 +1,4 @@
-#/usr/local/bin/git-lfs
+# usr/local/bin/git-lfs
 CVE-2020-29652
 +---------------------+------------------+----------+------------------------------------+------------------------------------+---------------------------------------+
 |       LIBRARY       | VULNERABILITY ID | SEVERITY |         INSTALLED VERSION          |           FIXED VERSION            |                 TITLE                 |
@@ -10,46 +10,74 @@ CVE-2020-29652
 +---------------------+------------------+----------+------------------------------------+------------------------------------+---------------------------------------+
 
 # usr/share/jenkins/jenkins.war
-CVE-2021-22119
-+---------------------------------------------------+------------------+----------+-------------------+------------------------------+---------------------------------------+
-|                      LIBRARY                      | VULNERABILITY ID | SEVERITY | INSTALLED VERSION |        FIXED VERSION         |                 TITLE                 |
-+---------------------------------------------------+------------------+----------+-------------------+------------------------------+---------------------------------------+
-| org.springframework.security:spring-security-core | CVE-2021-22119   | HIGH     | 5.4.6             | 5.2.11, 5.3.10, 5.4.7, 5.5.1 | spring-security: Denial-of-Service    |
-|                                                   |                  |          |                   |                              | (DoS) attack via initiation           |
-|                                                   |                  |          |                   |                              | of Authorization Request              |
-|                                                   |                  |          |                   |                              | -->avd.aquasec.com/nvd/cve-2021-22119 |
-+---------------------------------------------------+------------------+----------+-------------------+------------------------------+---------------------------------------+
-CVE-2021-21671
+CVE-2021-39139
+CVE-2021-39141
+CVE-2021-39144
+CVE-2021-39145
+CVE-2021-39146
+CVE-2021-39147
+CVE-2021-39148
+CVE-2021-39149
+CVE-2021-39150
+CVE-2021-39151
+CVE-2021-39152
+CVE-2021-39153
+CVE-2021-39154
+
 +----------------------------------+------------------+----------+-------------------+---------------+---------------------------------------+
 |             LIBRARY              | VULNERABILITY ID | SEVERITY | INSTALLED VERSION | FIXED VERSION |                 TITLE                 |
 +----------------------------------+------------------+----------+-------------------+---------------+---------------------------------------+
-| org.jenkins-ci.main:jenkins-core | CVE-2021-21671   | HIGH     | 2.289.3           |         2.300 | Session Fixation                      |
-|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-21671 |
+| com.thoughtworks.xstream:xstream | CVE-2021-39139   | HIGH     | 1.4.17            | 1.4.18        | xstream: vulnerable to an             |
+|                                  |                  |          |                   |               | arbitrary code execution attack       |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39139 |
++                                  +------------------+          +                   +               +---------------------------------------+
+|                                  | CVE-2021-39141   |          |                   |               | xstream: vulnerable to an             |
+|                                  |                  |          |                   |               | arbitrary code execution attack       |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39141 |
++                                  +------------------+          +                   +               +---------------------------------------+
+|                                  | CVE-2021-39144   |          |                   |               | xstream: vulnerable to a              |
+|                                  |                  |          |                   |               | remote command execution attack       |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39144 |
++                                  +------------------+          +                   +               +---------------------------------------+
+|                                  | CVE-2021-39145   |          |                   |               | xstream: vulnerable to an             |
+|                                  |                  |          |                   |               | arbitrary code execution attack       |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39145 |
++                                  +------------------+          +                   +               +---------------------------------------+
+|                                  | CVE-2021-39146   |          |                   |               | xstream: vulnerable to an             |
+|                                  |                  |          |                   |               | arbitrary code execution attack       |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39146 |
++                                  +------------------+          +                   +               +---------------------------------------+
+|                                  | CVE-2021-39147   |          |                   |               | xstream: vulnerable to an             |
+|                                  |                  |          |                   |               | arbitrary code execution attack       |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39147 |
++                                  +------------------+          +                   +               +---------------------------------------+
+|                                  | CVE-2021-39148   |          |                   |               | xstream: vulnerable to an             |
+|                                  |                  |          |                   |               | arbitrary code execution attack       |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39148 |
++                                  +------------------+          +                   +               +---------------------------------------+
+|                                  | CVE-2021-39149   |          |                   |               | xstream: vulnerable to an             |
+|                                  |                  |          |                   |               | arbitrary code execution attack       |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39149 |
++                                  +------------------+          +                   +               +---------------------------------------+
+|                                  | CVE-2021-39150   |          |                   |               | xstream: SSRF can be activated        |
+|                                  |                  |          |                   |               | unmarshalling with XStream            |
+|                                  |                  |          |                   |               | to access data streams...             |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39150 |
++                                  +------------------+          +                   +               +---------------------------------------+
+|                                  | CVE-2021-39151   |          |                   |               | xstream: vulnerable to an             |
+|                                  |                  |          |                   |               | arbitrary code execution attack       |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39151 |
++                                  +------------------+          +                   +               +---------------------------------------+
+|                                  | CVE-2021-39152   |          |                   |               | xstream: SSRF can be activated        |
+|                                  |                  |          |                   |               | unmarshalling with XStream            |
+|                                  |                  |          |                   |               | to access data streams...             |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39152 |
++                                  +------------------+          +                   +               +---------------------------------------+
+|                                  | CVE-2021-39153   |          |                   |               | xstream: vulnerable to an             |
+|                                  |                  |          |                   |               | arbitrary code execution attack       |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39153 |
++                                  +------------------+          +                   +               +---------------------------------------+
+|                                  | CVE-2021-39154   |          |                   |               | xstream: vulnerable to an             |
+|                                  |                  |          |                   |               | arbitrary code execution attack       |
+|                                  |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-39154 |
 +----------------------------------+------------------+----------+-------------------+---------------+---------------------------------------+
-CVE-2021-35515
-CVE-2021-35516
-CVE-2021-35517
-CVE-2021-36090
-+-------------------------------------+------------------+----------+-------------------+---------------+---------------------------------------+
-|               LIBRARY               | VULNERABILITY ID | SEVERITY | INSTALLED VERSION | FIXED VERSION |                 TITLE                 |
-+-------------------------------------+------------------+----------+-------------------+---------------+---------------------------------------+
-| org.apache.commons:commons-compress | CVE-2021-35515   | HIGH     |              1.20 |          1.21 | apache-commons-compress:              |
-|                                     |                  |          |                   |               | infinite loop when reading a          |
-|                                     |                  |          |                   |               | specially crafted 7Z archive          |
-|                                     |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-35515 |
-+                                     +------------------+          +                   +               +---------------------------------------+
-|                                     | CVE-2021-35516   |          |                   |               | apache-commons-compress: excessive    |
-|                                     |                  |          |                   |               | memory allocation when reading        |
-|                                     |                  |          |                   |               | a specially crafted 7Z archive        |
-|                                     |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-35516 |
-+                                     +------------------+          +                   +               +---------------------------------------+
-|                                     | CVE-2021-35517   |          |                   |               | apache-commons-compress: excessive    |
-|                                     |                  |          |                   |               | memory allocation when reading        |
-|                                     |                  |          |                   |               | a specially crafted TAR archive       |
-|                                     |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-35517 |
-+                                     +------------------+          +                   +               +---------------------------------------+
-|                                     | CVE-2021-36090   |          |                   |               | apache-commons-compress: excessive    |
-|                                     |                  |          |                   |               | memory allocation when reading        |
-|                                     |                  |          |                   |               | a specially crafted ZIP archive       |
-|                                     |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2021-36090 |
-+-------------------------------------+------------------+----------+-------------------+---------------+---------------------------------------+
