@@ -32,7 +32,7 @@ RUN --mount=type=bind,source=.shared,target=/mnt/shared \
   /mnt/shared/cmd/debian-cleanup.sh
 
 # https://github.com/jenkinsci/plugin-installation-manager-tool/releases
-ARG JENKINS_PLUGIN_MANAGER_MIN_VERSION='2.5.0'
+ARG JENKINS_PLUGIN_MANAGER_MIN_VERSION='2.12.3'
 
 ARG BUILD_DATE
 ARG GIT_BRANCH
