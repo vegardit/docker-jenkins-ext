@@ -59,7 +59,9 @@ docker image tag $image_name $image_repo:${jenkins_version%%.*}.x-$base_image_ta
 #################################################
 # perform security audit
 #################################################
-bash "$shared_lib/cmd/audit-image.sh" $image_name
+if [[ "${DOCKER_AUDIT_IMAGE:-1}" == 1 ]]; then
+   bash "$shared_lib/cmd/audit-image.sh" $image_name
+fi
 
 
 #################################################
