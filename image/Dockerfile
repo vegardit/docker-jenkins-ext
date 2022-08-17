@@ -55,7 +55,7 @@ ENV \
   REQUIRED_PLUGINS_FILE=''
 
 COPY image/jenkins-ext.sh /usr/local/bin/jenkins-ext.sh
-ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/jenkins-ext.sh"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins-ext.sh"]
 
 RUN \
   set -eu && \
