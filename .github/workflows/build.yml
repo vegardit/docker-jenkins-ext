@@ -45,8 +45,8 @@ jobs:
 
     - name: Configure APT
       run: |
-        # use apt-spy2 to select the closest apt mirror, to workaround avoid sporadic connectivity issues 
-        # "Could not connect to azure.archive.ubuntu.com:80", see https://github.com/actions/virtual-environments/issues/675
+        # Workaround to avoid sporadic connectivity issues "Could not connect to azure.archive.ubuntu.com:80"
+        # see https://github.com/actions/virtual-environments/issues/675
         echo 'APT::Acquire::Retries "3";' | sudo tee /etc/apt/apt.conf.d/80-acquire-retries
         if ! curl --max-time 3 --output /dev/null --silent --head --fail "http://azure.archive.ubuntu.com/ubuntu/dists/"; then
           sudo sed -i 's/azure\.//' /etc/apt/sources.list
